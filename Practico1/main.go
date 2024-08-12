@@ -19,12 +19,7 @@ func main() {
 	inApellido := widget.NewEntry()
 	inNombre := widget.NewEntry()
 	outCuadro := widget.NewMultiLineEntry()
-	/*outCuadro.Move(fyne.NewPos(0, 0))
-	bgColor := color.RGBA{R: 200, G: 200, B: 200, A: 255}
-	background := canvas.NewRectangle(bgColor)
-	background.SetMinSize(fyne.NewSize(100, 100))
-	//background.Move(fyne.NewPos(10, 10))
-	contOut := container.NewBorder(nil, nil, nil, nil, background, outCuadro)*/
+	outCuadro.Resize(fyne.NewSize(100, 100))
 
 	BGuardar := widget.NewButton("Guardar", func() {
 		outCuadro.SetText(inApellido.Text + " " + inNombre.Text)
@@ -35,6 +30,7 @@ func main() {
 	BSalir := widget.NewButton("Salir", func() {
 		myApp.Quit()
 	})
+	BSalir.Resize(fyne.NewSize(40, 70))
 
 	ctrlS := &desktop.CustomShortcut{KeyName: fyne.KeyS, Modifier: fyne.KeyModifierControl}
 	myWindow.Canvas().AddShortcut(ctrlS, func(shortcut fyne.Shortcut) {
@@ -56,10 +52,7 @@ func main() {
 	column := container.NewVBox(
 		apellido, nombre, botones,
 	)
-	content := container.NewHBox(
-		column,
-		salir,
-	)
+	content := container.NewGridWithColumns(2, column, salir)
 	myWindow.CenterOnScreen()
 	myWindow.SetContent(content)
 	myWindow.ShowAndRun()
