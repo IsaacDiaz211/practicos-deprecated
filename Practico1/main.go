@@ -1,11 +1,8 @@
 package main
 
 import (
-	"image/color"
-
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/widget"
@@ -21,20 +18,19 @@ func main() {
 
 	inApellido := widget.NewEntry()
 	inNombre := widget.NewEntry()
-	outCuadro := canvas.NewText("", color.Black)
-	outCuadro.Move(fyne.NewPos(0, 0))
+	outCuadro := widget.NewMultiLineEntry()
+	/*outCuadro.Move(fyne.NewPos(0, 0))
 	bgColor := color.RGBA{R: 200, G: 200, B: 200, A: 255}
 	background := canvas.NewRectangle(bgColor)
 	background.SetMinSize(fyne.NewSize(100, 100))
-	contOut := container.NewWithoutLayout(background, outCuadro)
+	//background.Move(fyne.NewPos(10, 10))
+	contOut := container.NewBorder(nil, nil, nil, nil, background, outCuadro)*/
 
 	BGuardar := widget.NewButton("Guardar", func() {
-		text := inApellido.Text + " " + inNombre.Text
-		outCuadro.Text = text
-		outCuadro.Refresh()
+		outCuadro.SetText(inApellido.Text + " " + inNombre.Text)
 	})
 	BEliminar := widget.NewButton("Eliminar", func() {
-		outCuadro.Text = ""
+		outCuadro.SetText("")
 	})
 	BSalir := widget.NewButton("Salir", func() {
 		myApp.Quit()
@@ -55,7 +51,7 @@ func main() {
 		BGuardar, BEliminar,
 	)
 	salir := container.NewVBox(
-		contOut, BSalir,
+		outCuadro, BSalir,
 	)
 	column := container.NewVBox(
 		apellido, nombre, botones,
